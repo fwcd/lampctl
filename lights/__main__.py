@@ -3,6 +3,7 @@ import re
 from typing import List
 from .combined import CombinedLightSystem
 from .light import Light, LightSystem
+from .color import COLORS
 from .hue import HueSystem
 
 class CommandParams:
@@ -31,6 +32,15 @@ def dim_command(p: CommandParams):
     for light in p.lights:
         light.brightness = arg / 100
 
+def color_command(p: CommandParams):
+    try:
+        color = COLORS[p.args[0]]
+    except:
+        raise ValueError(f"Unrecognized color, try one of these: {', '.join(COLORS.keys)}")
+
+    for light in p.lights:
+        light.color = color
+
 def toggle_command(p: CommandParams):
     for light in p.lights:
         light.toggle()
@@ -40,7 +50,8 @@ COMMANDS = {
     "on": on_command,
     "off": off_command,
     "toggle": toggle_command,
-    "dim": dim_command
+    "dim": dim_command,
+    "color": color_command
 }
 
 def main():
