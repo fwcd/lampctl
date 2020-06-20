@@ -3,6 +3,8 @@ A small CLI utility for controlling your smart lamps at home.
 
 ![Icon](lights-icon.png)
 
+Currently only Philips Hue lamps are supported, but adding support for other backends is easy.
+
 ## Getting Started
 * Optionally setup a virtual environment:
     * Create a venv using `python3 -m venv venv`
