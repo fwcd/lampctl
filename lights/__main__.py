@@ -1,5 +1,6 @@
 import argparse
 import re
+import os
 from typing import List
 from .combined import CombinedLightSystem
 from .light import Light, LightSystem
@@ -61,20 +62,25 @@ def main():
     parser.add_argument("command", nargs=argparse.REMAINDER, help="The command to invoke.")
 
     args = parser.parse_args()
+    hue_bridge_ip = args.hue_bridge_ip or os.environ.get("LIGHTS_HUE_BRIDGE_IP")
+    name = args.name or os.environ.get("LIGHTS_NAME")
     command = args.command
+
+    # Setup light system
     selected = []
     system = CombinedLightSystem()
 
-    if args.hue_bridge_ip:
-        system.add(HueSystem(args.hue_bridge_ip))
+    if hue_bridge_ip:
+        system.add(HueSystem(hue_bridge_ip))
     
     system.connect()
 
-    if args.name:
-        selected = system.lights_with_name(args.name)
+    if name:
+        selected = system.lights_with_name(name)
     else:
         selected = system.lights
 
+    # Perform user-invoked command
     if command:
         f = COMMANDS.get(command[0], None)
         if f:
