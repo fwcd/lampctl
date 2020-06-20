@@ -1,16 +1,21 @@
-class Color:
-    def __init__(self, red: int, green: int, blue: int):
-        self.red = red
-        self.green = green
-        self.blue = blue
+class HSBColor:
+    """A hue-saturation-brightness color."""
+
+    def __init__(self, hue: float = 0, saturation: float = 1, brightness: float = 1):
+        self.hue = hue
+        self.saturation = saturation
+        self.brightness = brightness
+    
+    def average(self, o):
+        return HSBColor((self.hue + o.hue) / 2, (self.saturation + o.saturation) / 2, (self.brightness + o.brightness) / 2)
 
 COLORS = {
-    "red": Color(0xFF, 0, 0),
-    "green": Color(0, 0xFF, 0),
-    "blue": Color(0, 0, 0xFF),
-    "magenta": Color(0xFF, 0, 0xFF),
-    "cyan": Color(0, 0xFF, 0xFF),
-    "yellow": Color(0xFF, 0xFF, 0),
-    "white": Color(0xFF, 0xFF, 0xFF),
-    "black": Color(0, 0, 0)
+    "white": HSBColor(brightness=1, saturation=0),
+    "black": HSBColor(brightness=0, saturation=0),
+    "red": HSBColor(hue=0),
+    "orange": HSBColor(hue=0.08),
+    "yellow": HSBColor(hue=0.17),
+    "green": HSBColor(hue=0.45),
+    "blue": HSBColor(hue=0.82),
+    "purple": HSBColor(hue=0.88)
 }

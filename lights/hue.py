@@ -1,7 +1,10 @@
 import phue
 from typing import List
 from .light import Light, LightSystem
+from .color import HSBColor
 
+HUE_FACTOR = 56635
+SATURATION_FACTOR = 254
 BRIGHTNESS_FACTOR = 254
 
 class HueLight(Light):
@@ -28,12 +31,19 @@ class HueLight(Light):
     def on(self, value: bool):
         self.hue_light.on = value
     
-    # @property
-    # def color(self):
-    #     return None
+    @property
+    def color(self) -> HSBColor:
+        return HSBColor(
+            float(self.hue_light.hue) / HUE_FACTOR,
+            float(self.hue_light.saturation) / SATURATION_FACTOR,
+            float(self.hue_light.brightness) / BRIGHTNESS_FACTOR
+        )
 
-    # @color.setter
-    # def color(self, color: Color):
+    @color.setter
+    def color(self, color: HSBColor):
+        self.hue_light.hue = int(color.hue * HUE_FACTOR)
+        self.hue_light.saturation = int(color.saturation * SATURATION_FACTOR)
+        self.hue_light.brightness = int(color.brightness * BRIGHTNESS_FACTOR)
         
 class HueSystem(LightSystem):
     def __init__(self, ip: str):

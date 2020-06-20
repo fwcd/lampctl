@@ -1,6 +1,5 @@
 from typing import List
 from .light import Light, LightSystem
-from .color import Color
 
 class CombinedLightSystem(LightSystem):
     def __init__(self, systems: List[LightSystem] = []):

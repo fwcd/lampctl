@@ -1,5 +1,5 @@
 from typing import List
-from .color import Color
+from .color import HSBColor
 
 class Light:
     @property
@@ -31,12 +31,12 @@ class Light:
         self.on = not self.on
 
     @property
-    def color(self):
+    def color(self) -> HSBColor:
         """Fetches the RGB color of the lamp."""
         return None
 
     @color.setter
-    def color(self, color: Color) -> Color:
+    def color(self, color: HSBColor):
         """Sets the RGB color of the lamp."""
         raise NotImplementedError("Setting the color is not supported")
 
