@@ -14,7 +14,7 @@ class CommandParams:
         self.args = args
 
 def list_command(p: CommandParams):
-    print("\n".join(str(l) for l in p.system.lights))
+    print("\n".join(f"{l.name:>15} ({f'on={l.on}':<8}, brightness={l.brightness:.2f}, color={l.color})" for l in p.system.lights))
 
 def on_command(p: CommandParams):
     for light in p.lights:

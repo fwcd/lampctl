@@ -10,7 +10,7 @@ class HSBColor:
         return HSBColor((self.hue + o.hue) / 2, (self.saturation + o.saturation) / 2, (self.brightness + o.brightness) / 2)
 
     def __str__(self):
-        return f"(H: {self.hue}, S: {self.saturation}, B: {self.brightness})"
+        return f"(H: {self.hue:.3f}, S: {self.saturation:.3f}, B: {self.brightness:.3f})"
 
 COLORS = {
     "white": HSBColor(brightness=1, saturation=0),
