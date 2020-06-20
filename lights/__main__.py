@@ -2,33 +2,28 @@ import argparse
 import re
 from typing import List
 from .combined import CombinedLightSystem
-from .light import LightSystem
+from .light import Light, LightSystem
 from .hue import HueSystem
 
-def list_command(args: List[str], system: LightSystem):
-    print([l.name for l in system.lights])
+class CommandParams:
+    def __init__(self, lights: List[Light], system: LightSystem, args: List[str]):
+        self.lights = lights
+        self.system = system
+        self.args = args
 
-def intended_lights(args: List[str], system: LightSystem):
-    if args:
-        name = args[0]
-        lights = [l for l in system.lights if l.name == name]
-        if lights:
-            return lights
-        else:
-            raise ValueError(f"No light with name {name} found")
-    else:
-        return system.lights
+def list_command(p: CommandParams):
+    print([l.name for l in p.system.lights])
 
-def on_command(args: List[str], system: LightSystem):
-    for light in intended_lights(args, system):
+def on_command(p: CommandParams):
+    for light in p.lights:
         light.on = True
 
-def off_command(args: List[str], system: LightSystem):
-    for light in intended_lights(args, system):
+def off_command(p: CommandParams):
+    for light in p.lights:
         light.on = False
 
-def toggle_command(args: List[str], system: LightSystem):
-    for light in intended_lights(args, system):
+def toggle_command(p: CommandParams):
+    for light in p.lights:
         light.toggle()
 
 COMMANDS = {
@@ -41,19 +36,28 @@ COMMANDS = {
 def main():
     parser = argparse.ArgumentParser(description="Lets you control your smart lamps at home.")
     parser.add_argument("-b", "--hue_bridge_ip", type=str, help="The IP of your Hue bridge.")
+    parser.add_argument("-n", "--name", type=str, help="Optionally a single, selected light's name. By default, all lights are selected.")
     parser.add_argument("command", nargs=argparse.REMAINDER, help="The command to invoke.")
 
     args = parser.parse_args()
     command = args.command
+    selected = []
     system = CombinedLightSystem()
 
     if args.hue_bridge_ip:
         system.add(HueSystem(args.hue_bridge_ip))
+    
+    system.connect()
+
+    if args.name:
+        selected = system.lights_with_name(args.name)
+    else:
+        selected = system.lights
 
     if command:
         f = COMMANDS.get(command[0], None)
         if f:
-            f(command[1:], system)
+            f(CommandParams(selected, system, command[1:]))
         else:
             print(f"Unrecognized command name {command[0]}. Try one of these: {', '.join(COMMANDS.keys())}")
     else:

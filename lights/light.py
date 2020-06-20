@@ -49,3 +49,10 @@ class LightSystem:
     def lights(self) -> List[Light]:
         """Lists the available lights."""
         raise NotImplementedError("Cannot fetch lights")
+    
+    def lights_with_name(self, name: str) -> List[Light]:
+        lights = [l for l in self.lights if l.name == name]
+        if lights:
+            return lights
+        else:
+            raise ValueError(f"No light with name {name} found")
