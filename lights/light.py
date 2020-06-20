@@ -40,6 +40,9 @@ class Light:
         """Sets the RGB color of the lamp."""
         raise NotImplementedError("Setting the color is not supported")
 
+    def __str__(self):
+        return f"{self.name} (on={self.on}, brightness={self.brightness}, color={self.color})"
+
 class LightSystem:
     def connect(self):
         """If required by the implementation, connects to the light system."""

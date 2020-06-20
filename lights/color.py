@@ -9,6 +9,9 @@ class HSBColor:
     def average(self, o):
         return HSBColor((self.hue + o.hue) / 2, (self.saturation + o.saturation) / 2, (self.brightness + o.brightness) / 2)
 
+    def __str__(self):
+        return f"(H: {self.hue}, S: {self.saturation}, B: {self.brightness})"
+
 COLORS = {
     "white": HSBColor(brightness=1, saturation=0),
     "black": HSBColor(brightness=0, saturation=0),
