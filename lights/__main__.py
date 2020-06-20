@@ -22,6 +22,15 @@ def off_command(p: CommandParams):
     for light in p.lights:
         light.on = False
 
+def dim_command(p: CommandParams):
+    try:
+        arg = float(p.args[0])
+    except:
+        raise ValueError("Please enter an integer between 0 and 100!")
+
+    for light in p.lights:
+        light.brightness = arg / 100
+
 def toggle_command(p: CommandParams):
     for light in p.lights:
         light.toggle()
@@ -30,7 +39,8 @@ COMMANDS = {
     "list": list_command,
     "on": on_command,
     "off": off_command,
-    "toggle": toggle_command
+    "toggle": toggle_command,
+    "dim": dim_command
 }
 
 def main():
