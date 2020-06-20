@@ -27,10 +27,15 @@ def off_command(args: List[str], system: LightSystem):
     for light in intended_lights(args, system):
         light.on = False
 
+def toggle_command(args: List[str], system: LightSystem):
+    for light in intended_lights(args, system):
+        light.toggle()
+
 COMMANDS = {
     "list": list_command,
     "on": on_command,
-    "off": off_command
+    "off": off_command,
+    "toggle": toggle_command
 }
 
 def main():
