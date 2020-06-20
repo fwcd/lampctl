@@ -2,6 +2,8 @@ import phue
 from typing import List
 from .light import Light, LightSystem
 
+BRIGHTNESS_FACTOR = 255
+
 class HueLight(Light):
     def __init__(self, hue_light):
         self.hue_light = hue_light
@@ -12,11 +14,19 @@ class HueLight(Light):
 
     @property
     def brightness(self) -> float:
-        return self.hue_light.brightness
+        return self.hue_light.brightness / BRIGHTNESS_FACTOR
     
     @brightness.setter
     def brightness(self, value: float):
-        self.hue_light.brightness = value
+        self.hue_light.brightness = value * BRIGHTNESS_FACTOR
+    
+    @property
+    def on(self) -> bool:
+        return self.hue_light.on
+
+    @on.setter
+    def on(self, value: bool):
+        self.hue_light.on = value
     
     # @property
     # def color(self):

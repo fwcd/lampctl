@@ -21,11 +21,11 @@ def intended_lights(args: List[str], system: LightSystem):
 
 def on_command(args: List[str], system: LightSystem):
     for light in intended_lights(args, system):
-        light.brightness = 1
+        light.on = True
 
 def off_command(args: List[str], system: LightSystem):
     for light in intended_lights(args, system):
-        light.brightness = 0
+        light.on = False
 
 COMMANDS = {
     "list": list_command,

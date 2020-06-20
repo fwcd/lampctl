@@ -18,6 +18,19 @@ class Light:
         raise NotImplementedError("Setting the brightness is not supported")
 
     @property
+    def on(self) -> bool:
+        """Whether the lamp is activated."""
+        return None
+
+    @on.setter
+    def on(self, value: bool):
+        """Activates or deactivates the lamp."""
+        raise NotImplementedError("Activating or deactivating the lamp is not supported")
+
+    def toggle(self):
+        self.on = not self.on
+
+    @property
     def color(self):
         """Fetches the RGB color of the lamp."""
         return None
