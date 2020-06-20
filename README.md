@@ -13,11 +13,19 @@ Currently only Philips Hue lamps are supported, but adding support for other bac
 * Finally install the dependencies with `pip3 install -r requirements.txt`
 
 ## Usage
-`python3 -m lights [-h] [-b HUE_BRIDGE_IP] [-n NAME] ...`
+`lights [-h] [-b HUE_BRIDGE_IP] [-n NAME] ...`
 
 > Note that you can alternatively provide the environment variables `LIGHTS_HUE_BRIDGE_IP` and `LIGHTS_NAME`.
 
 > If no lights are selected, the tool will automatically select all of the available lights.
+
+Examples:
+* `lights on`
+* `lights off`
+* `lights toggle`
+* `lights color blue`
+* `lights dim 50`
+* `lights -n "My Lamp" on`
 
 ## Installing
 * First make sure you are not in a virtual environment
