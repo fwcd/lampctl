@@ -1,14 +1,36 @@
 import argparse
 import re
 from typing import List
+from .combined import CombinedLightSystem
 from .light import LightSystem
 from .hue import HueSystem
 
-def list_command(args: List[str], systems: List[LightSystem]):
-    print([l.name for s in systems for l in s.lights])
+def list_command(args: List[str], system: LightSystem):
+    print([l.name for l in system.lights])
+
+def intended_lights(args: List[str], system: LightSystem):
+    if args:
+        name = args[0]
+        lights = [l for l in system.lights if l.name == name]
+        if lights:
+            return lights
+        else:
+            raise ValueError(f"No light with name {name} found")
+    else:
+        return system.lights
+
+def on_command(args: List[str], system: LightSystem):
+    for light in intended_lights(args, system):
+        light.brightness = 1
+
+def off_command(args: List[str], system: LightSystem):
+    for light in intended_lights(args, system):
+        light.brightness = 0
 
 COMMANDS = {
-    "list": list_command
+    "list": list_command,
+    "on": on_command,
+    "off": off_command
 }
 
 def main():
@@ -18,18 +40,15 @@ def main():
 
     args = parser.parse_args()
     command = args.command
-    systems = []
+    system = CombinedLightSystem()
 
     if args.hue_bridge_ip:
-        systems.append(HueSystem(args.hue_bridge_ip))
-
-    for system in systems:
-        system.connect()
+        system.add(HueSystem(args.hue_bridge_ip))
 
     if command:
         f = COMMANDS.get(command[0], None)
         if f:
-            f(command[1:], systems)
+            f(command[1:], system)
         else:
             print(f"Unrecognized command name {command[0]}. Try one of these: {', '.join(COMMANDS.keys())}")
     else:

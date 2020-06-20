@@ -3,12 +3,12 @@ from .color import Color
 
 class Light:
     @property
-    def name(self):
+    def name(self) -> str:
         """Fetches the lamp's name."""
         return None
 
     @property
-    def brightness(self):
+    def brightness(self) -> float:
         """Fetches the brightness of the lamp (on the range [0, 1])."""
         return None
 
@@ -23,7 +23,7 @@ class Light:
         return None
 
     @color.setter
-    def color(self, color: Color):
+    def color(self, color: Color) -> Color:
         """Sets the RGB color of the lamp."""
         raise NotImplementedError("Setting the color is not supported")
 

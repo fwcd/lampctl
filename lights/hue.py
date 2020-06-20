@@ -7,11 +7,11 @@ class HueLight(Light):
         self.hue_light = hue_light
     
     @property
-    def name(self):
+    def name(self) -> str:
         return self.hue_light.name
 
     @property
-    def brightness(self):
+    def brightness(self) -> float:
         return self.hue_light.brightness
     
     @brightness.setter
