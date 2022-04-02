@@ -48,6 +48,18 @@ def color_command(opts: Options):
     for light in opts.lights:
         light.color = color
 
+def temp_command(opts: Options):
+    try:
+        arg = float(opts.args[0])
+    except:
+        raise ValueError("Please specify an integer between 0 (cold) and 100 (warm)!")
+    
+    factor = arg / 100
+    color = COLORS["cold"] * (1 - factor) + COLORS["warm"] * factor
+
+    for light in opts.lights:
+        light.color = color
+
 def toggle_command(opts: Options):
     for light in opts.lights:
         light.toggle()
@@ -60,7 +72,8 @@ COMMANDS = {
     "off": off_command,
     "toggle": toggle_command,
     "dim": dim_command,
-    "color": color_command
+    "color": color_command,
+    "temp": temp_command
 }
 
 SYSTEMS = {
