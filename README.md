@@ -1,5 +1,7 @@
 # Lights
 
+[![Test](https://github.com/fwcd/lights/actions/workflows/test.yml/badge.svg)](https://github.com/fwcd/lights/actions/workflows/test.yml)
+
 A small CLI utility for controlling your smart lamps at home.
 
 ![Icon](lights-icon.png)
