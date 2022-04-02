@@ -13,7 +13,7 @@ from lights.hue import HueSystem
 class CommandParams:
     lights: list[Light]
     system: LightSystem
-    args: list[str] = []
+    args: list[str]
 
 def list_command(p: CommandParams):
     print("\n".join(f"{l.name:>15} ({f'on={l.on}':<8}, brightness={l.brightness:.2f}, color={l.color})" for l in p.system.lights))
@@ -36,10 +36,13 @@ def dim_command(p: CommandParams):
         light.brightness = arg / 100
 
 def color_command(p: CommandParams):
-    try:
-        color = COLORS[p.args[0]]
-    except:
-        raise ValueError(f"Unrecognized color, try one of these: {', '.join(COLORS.keys())}")
+    if p.args:
+        try:
+            color = COLORS[p.args[0]]
+        except:
+            raise ValueError(f"Unrecognized color, try one of these: {', '.join(COLORS.keys())}")
+    else:
+        color = COLORS["default"]
 
     for light in p.lights:
         light.color = color
