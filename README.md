@@ -8,13 +8,23 @@ Currently only Philips Hue lamps are supported, but adding support for other bac
 
 ## Usage
 
-`lights [-h] [-c CONFIG] [-n NAME] [command] ...`
+To use, first create the file `~/.config/lights/config.json` pointing to your light systems:
 
-> Note that you can alternatively provide the environment variable `LIGHTS_NAME` to specify the light to control.
+```json
+{
+  "systems": [
+    {
+      "type": "hue",
+      "bridge-ip": "your.ip.here"
+    }
+  ],
+  "default-light": "My Lamp"
+}
+```
 
-> If no lights are selected, the tool will automatically select all of the available lights.
+> If no `default-light` is set you can use the environment variable `LIGHTS_NAME` or `-n` to specify the light to control.
 
-Examples:
+Now you can use the CLI to control your lights. For example:
 
 * `lights on`
 * `lights off`
