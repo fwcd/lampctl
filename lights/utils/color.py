@@ -6,8 +6,18 @@ class HSBColor:
         self.saturation = saturation
         self.brightness = brightness
     
-    def average(self, o):
-        return HSBColor((self.hue + o.hue) / 2, (self.saturation + o.saturation) / 2, (self.brightness + o.brightness) / 2)
+    def average(self, other):
+        return HSBColor((self.hue + other.hue) / 2, (self.saturation + other.saturation) / 2, (self.brightness + other.brightness) / 2)
+    
+    def __add__(self, other):
+        if not isinstance(other, HSBColor):
+            raise TypeError(f"Unsupported operand types for +: 'HSBColor' and '{type(other).__name__}'")
+        return HSBColor(self.hue + other.hue, self.saturation + other.saturation, self.brightness + other.brightness)
+    
+    def __mul__(self, other):
+        if not isinstance(other, float):
+            raise TypeError(f"Unsupported operand types for *: 'HSBColor' and '{type(other).__name__}'")
+        return HSBColor(self.hue * other, self.saturation * other, self.brightness * other)
 
     def __str__(self):
         return f"(H: {self.hue:.3f}, S: {self.saturation:.3f}, B: {self.brightness:.3f})"
