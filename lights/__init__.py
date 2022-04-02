@@ -4,6 +4,7 @@ import os
 import pathlib
 
 from dataclasses import dataclass
+from typing import Callable
 
 from lights.system import Light, LightSystem
 from lights.system.combined import CombinedLightSystem
@@ -17,22 +18,28 @@ class Options:
     verbose: bool
     args: list[str]
 
+# Helpers
+
+def update_onoff(should_be_on: Callable[[bool], bool], opts: Options):
+    for light in opts.lights:
+        light.on = should_be_on(light.on)
+
+        if opts.verbose:
+            print(f"{light.name} is now {'on' if light.on else 'off'}")
+
+# Commands
+
 def list_command(opts: Options):
     print("\n".join(f"{l.name:>15} ({f'on={l.on}':<8}, brightness={l.brightness:.2f}, color={l.color})" for l in opts.system.lights))
 
 def on_command(opts: Options):
-    for light in opts.lights:
-        light.on = True
-
-        if opts.verbose:
-            print(f"{light.name} is now {'on' if light.on else 'off'}")
+    update_onoff(lambda _: True, opts)
 
 def off_command(opts: Options):
-    for light in opts.lights:
-        light.on = False
+    update_onoff(lambda _: False, opts)
 
-        if opts.verbose:
-            print(f"{light.name} is now {'on' if light.on else 'off'}")
+def toggle_command(opts: Options):
+    update_onoff(lambda on: not on, opts)
 
 def dim_command(opts: Options):
     try:
@@ -78,15 +85,6 @@ def temp_command(opts: Options):
         if opts.verbose:
             print(f"{light.name}'s color is now {light.color}")
 
-def toggle_command(opts: Options):
-    for light in opts.lights:
-        light.toggle()
-
-        if opts.verbose:
-            print(f"{light.name} is now {'on' if light.on else 'off'}")
-
-DEFAULT_CONFIG_PATH = pathlib.Path.home() / ".config" / "lights" / "config.json"
-
 COMMANDS = {
     "list": list_command,
     "on": on_command,
@@ -100,6 +98,8 @@ COMMANDS = {
 SYSTEMS = {
     "hue": lambda config: HueSystem(config["bridge-ip"])
 }
+
+DEFAULT_CONFIG_PATH = pathlib.Path.home() / ".config" / "lights" / "config.json"
 
 def main():
     parser = argparse.ArgumentParser(description="Lets you control your smart lamps at home.")
