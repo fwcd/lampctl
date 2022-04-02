@@ -1,3 +1,5 @@
+import math
+
 from dataclasses import dataclass
 from __future__ import annotations
 
@@ -9,12 +11,31 @@ class RGBColor:
     blue: float = 0
 
     def average(self, other: RGBColor) -> RGBColor:
+        """The arithmetic mean of this and the given color."""
         return RGBColor((self.red + other.red) / 2, (self.green + other.green) / 2, (self.blue + other.blue) / 2)
+    
+    @property
+    def norm(self) -> float:
+        """The Euclidean norm of this color."""
+        return math.sqrt(self.red * self.red + self.green * self.green + self.blue * self.blue)
+    
+    def distance(self, other: RGBColor) -> float:
+        """The Euclidean distance to the specified color."""
+        return (self - other).norm
+    
+    def approximately(self, other: RGBColor, eps: float = 0.001) -> bool:
+        """Whether this color approximately equals the other."""
+        return self.distance(other) < eps
     
     def __add__(self, other: RGBColor) -> RGBColor:
         if not isinstance(other, RGBColor):
             raise TypeError(f"Unsupported operand types for +: 'RGBColor' and '{type(other).__name__}'")
         return RGBColor(self.red + other.red, self.green + other.green, self.blue + other.blue)
+
+    def __sub__(self, other: RGBColor) -> RGBColor:
+        if not isinstance(other, RGBColor):
+            raise TypeError(f"Unsupported operand types for -: 'RGBColor' and '{type(other).__name__}'")
+        return RGBColor(self.red - other.red, self.green - other.green, self.blue - other.blue)
     
     def __mul__(self, other: RGBColor) -> RGBColor:
         if not isinstance(other, float):
