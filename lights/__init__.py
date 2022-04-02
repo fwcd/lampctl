@@ -68,7 +68,7 @@ SYSTEMS = {
 
 def main():
     parser = argparse.ArgumentParser(description="Lets you control your smart lamps at home.")
-    parser.add_argument("-c", "--config", type=str, required=not DEFAULT_CONFIG_PATH.exists(), default=str(DEFAULT_CONFIG_PATH), help="Path to a config.json file that can be used to configure lights.")
+    parser.add_argument("--config", type=str, required=not DEFAULT_CONFIG_PATH.exists(), default=str(DEFAULT_CONFIG_PATH), help="Path to a config.json file that can be used to configure lights.")
     parser.add_argument("-n", "--name", type=str, help="A single, selected light's name. If a default light is set in the config file, this argument can be omitted.")
     parser.add_argument("-a", "--all", action="store_true", help="Selects all lights.")
     parser.add_argument("command", type=str, choices=sorted(COMMANDS.keys()), help="The command to invoke.")
