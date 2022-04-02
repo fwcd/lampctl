@@ -8,6 +8,6 @@ setup(
         "phue==1.1"
     ],
     entry_points={
-        "console_scripts": ["lights = lights.__main__:main"]
+        "console_scripts": ["lights = lights:main"]
     }
 )
