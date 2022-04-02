@@ -6,13 +6,13 @@ import math
 @dataclass
 class RGBColor:
     """A red-green-blue color (with each component in the range [0, 1])."""
-    red: float = 0
-    green: float = 0
-    blue: float = 0
+    red: float = 0.0
+    green: float = 0.0
+    blue: float = 0.0
 
     def average(self, other: RGBColor) -> RGBColor:
         """The arithmetic mean of this and the given color."""
-        return RGBColor((self.red + other.red) / 2, (self.green + other.green) / 2, (self.blue + other.blue) / 2)
+        return RGBColor((self.red + other.red) / 2.0, (self.green + other.green) / 2.0, (self.blue + other.blue) / 2.0)
     
     @property
     def norm(self) -> float:
@@ -46,13 +46,13 @@ class RGBColor:
         return f"(red={self.red:.3f}, green={self.green:.3f}, blue={self.blue:.3f})"
 
 RGB_COLORS = {
-    "white": RGBColor(red=1, green=1, blue=1),
-    "gray": RGBColor(red=0.5, green=0.5, blue=0.5),
-    "black": RGBColor(red=0, green=0, blue=0),
-    "red": RGBColor(red=1, green=0, blue=0),
-    "green": RGBColor(red=0, green=1, blue=0),
-    "blue": RGBColor(red=0, green=0, blue=1),
-    "magenta": RGBColor(red=1, green=0, blue=1),
-    "cyan": RGBColor(red=0, green=1, blue=1),
-    "yellow": RGBColor(red=1, green=1, blue=0)
+    "white":   RGBColor(red=1.0, green=1.0, blue=1.0),
+    "gray":    RGBColor(red=0.5, green=0.5, blue=0.5),
+    "black":   RGBColor(red=0.0, green=0.0, blue=0.0),
+    "red":     RGBColor(red=1.0, green=0.0, blue=0.0),
+    "green":   RGBColor(red=0.0, green=1.0, blue=0.0),
+    "blue":    RGBColor(red=0.0, green=0.0, blue=1.0),
+    "magenta": RGBColor(red=1.0, green=0.0, blue=1.0),
+    "cyan":    RGBColor(red=0.0, green=1.0, blue=1.0),
+    "yellow":  RGBColor(red=1.0, green=1.0, blue=0.0)
 }
