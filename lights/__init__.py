@@ -4,10 +4,11 @@ import os
 import pathlib
 
 from dataclasses import dataclass
-from lights.combined import CombinedLightSystem
-from lights.light import Light, LightSystem
-from lights.color import COLORS
-from lights.hue import HueSystem
+
+from lights.system import Light, LightSystem
+from lights.system.combined import CombinedLightSystem
+from lights.system.hue import HueSystem
+from lights.utils.color import COLORS
 
 @dataclass
 class Options:

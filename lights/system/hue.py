@@ -1,8 +1,7 @@
 import phue
-from typing import List
 
-from lights.light import Light, LightSystem
-from lights.color import HSBColor
+from lights.system import Light, LightSystem
+from lights.utils.color import HSBColor
 
 HUE_FACTOR = 56635
 SATURATION_FACTOR = 254
@@ -54,5 +53,5 @@ class HueSystem(LightSystem):
         self.bridge.connect()
 
     @property
-    def lights(self) -> List[Light]:
+    def lights(self) -> list[Light]:
         return [HueLight(l) for l in self.bridge.lights]

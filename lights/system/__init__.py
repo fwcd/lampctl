@@ -1,6 +1,4 @@
-from typing import List
-
-from lights.color import HSBColor
+from lights.utils.color import HSBColor
 
 class Light:
     @property
@@ -50,11 +48,11 @@ class LightSystem:
         pass
 
     @property
-    def lights(self) -> List[Light]:
-        """Lists the available lights."""
+    def lights(self) -> list[Light]:
+        """lists the available lights."""
         raise NotImplementedError("Cannot fetch lights")
     
-    def lights_with_name(self, name: str) -> List[Light]:
+    def lights_with_name(self, name: str) -> list[Light]:
         lights = [l for l in self.lights if l.name == name]
         if lights:
             return lights

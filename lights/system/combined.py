@@ -1,9 +1,7 @@
-from typing import List
-
-from lights.light import Light, LightSystem
+from lights.system import Light, LightSystem
 
 class CombinedLightSystem(LightSystem):
-    def __init__(self, systems: List[LightSystem] = []):
+    def __init__(self, systems: list[LightSystem] = []):
         self.systems = systems
     
     def add(self, system: LightSystem):
@@ -14,5 +12,5 @@ class CombinedLightSystem(LightSystem):
             system.connect()
     
     @property
-    def lights(self) -> List[Light]:
+    def lights(self) -> list[Light]:
         return [l for s in self.systems for l in s.lights]
