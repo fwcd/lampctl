@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import math
+import lights.color.hsb as hsb
 
 @dataclass
 class RGBColor:
@@ -13,6 +14,28 @@ class RGBColor:
     def average(self, other: RGBColor) -> RGBColor:
         """The arithmetic mean of this and the given color."""
         return RGBColor((self.red + other.red) / 2.0, (self.green + other.green) / 2.0, (self.blue + other.blue) / 2.0)
+
+    @property
+    def as_hsb(self) -> hsb.HSBColor:
+        """Converts this color to HSB space."""
+        # Source: https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
+
+        r = self.red
+        g = self.green
+        b = self.blue
+        x_max = max(r, g, b)
+        x_min = min(r, g, b)
+        c = x_max - x_min
+        
+        if c == 0:       h = 0
+        elif x_max == r: h = (    (g - b) / c) / 6
+        elif x_max == g: h = (2 + (b - r) / c) / 6
+        elif x_max == b: h = (4 + (r - g) / c) / 6
+        else:            raise ValueError("unreachable")
+
+        s = 0 if x_max == 0 else c / x_max
+
+        return hsb.HSBColor(h, s, x_max)
     
     @property
     def norm(self) -> float:

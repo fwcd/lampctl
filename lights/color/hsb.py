@@ -2,8 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import math
-
-from lights.color.rgb import RGBColor
+import lights.color.rgb as rgb
 
 @dataclass
 class HSBColor:
@@ -17,8 +16,8 @@ class HSBColor:
         return self.brightness * self.saturation
     
     @property
-    def as_rgb(self) -> RGBColor:
-        """Converts this color to RGB."""
+    def as_rgb(self) -> rgb.RGBColor:
+        """Converts this color to RGB space."""
         # Source: https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_RGB
         # TODO: This HSB -> RGB conversion is not very precise w.r.t hue
 
@@ -36,7 +35,7 @@ class HSBColor:
         else:                (r0, g0, b0) = (c, 0.0, x)
 
         m = b - c
-        return RGBColor(r0 + m, g0 + m, b0 + m)
+        return rgb.RGBColor(r0 + m, g0 + m, b0 + m)
 
     def average(self, other: HSBColor) -> HSBColor:
         """The arithmetic mean of this and the given color."""
@@ -47,11 +46,11 @@ class HSBColor:
         """The Euclidean norm of this color."""
         return math.sqrt(self.hue * self.hue + self.saturation * self.saturation + self.brightness * self.brightness)
     
-    def distance(self, other: RGBColor) -> float:
+    def distance(self, other: HSBColor) -> float:
         """The Euclidean distance to the specified color."""
         return (self - other).norm
     
-    def approximately(self, other: RGBColor, eps: float = 0.001) -> bool:
+    def approximately(self, other: HSBColor, eps: float = 0.001) -> bool:
         """Whether this color approximately equals the other."""
         return self.distance(other) < eps
 
@@ -59,6 +58,11 @@ class HSBColor:
         if not isinstance(other, HSBColor):
             raise TypeError(f"Unsupported operand types for +: 'HSBColor' and '{type(other).__name__}'")
         return HSBColor(self.hue + other.hue, self.saturation + other.saturation, self.brightness + other.brightness)
+
+    def __sub__(self, other: HSBColor) -> HSBColor:
+        if not isinstance(other, HSBColor):
+            raise TypeError(f"Unsupported operand types for -: 'HSBColor' and '{type(other).__name__}'")
+        return HSBColor(self.hue - other.hue, self.saturation - other.saturation, self.brightness - other.brightness)
     
     def __mul__(self, other: HSBColor) -> HSBColor:
         if not isinstance(other, float):

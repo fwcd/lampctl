@@ -12,8 +12,19 @@ class TestColors(unittest.TestCase):
         self.assertApproximately(HSB_COLORS["blue"].as_rgb, RGB_COLORS["blue"])
         self.assertApproximately(HSB_COLORS["black"].as_rgb, RGB_COLORS["black"])
     
-    def assertApproximately(self, lhs, rhs):
-        self.assertTrue(lhs.approximately(rhs), f"{lhs} should approximately equal {rhs}")
+    def test_rgb_hsb_conversion(self):
+        for name, color in RGB_COLORS.items():
+            self.assertApproximately(color.as_hsb.as_rgb, color, name)
+
+    # TODO: HSB -> RGB conversion is not accurate enough yet to handle e.g.
+    #       the warmer/colder whitetones
+
+    # def test_hsb_rgb_conversion(self):
+    #     for name, color in HSB_COLORS.items():
+    #         self.assertApproximately(color.as_rgb.as_hsb, color, name)
+    
+    def assertApproximately(self, lhs, rhs, name=None):
+        self.assertTrue(lhs.approximately(rhs), f"{lhs} should approximately equal {rhs} ({name or 'unnamed'})")
 
 if __name__ == "__main__":
     unittest.main()
