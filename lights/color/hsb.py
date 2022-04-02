@@ -20,6 +20,7 @@ class HSBColor:
     def as_rgb(self) -> RGBColor:
         """Converts this color to RGB."""
         # Source: https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_RGB
+        # TODO: This HSB -> RGB conversion is not very precise w.r.t hue
 
         h = self.hue
         b = self.brightness
