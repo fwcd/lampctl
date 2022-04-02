@@ -59,7 +59,7 @@ COMMANDS = {
 
 def main():
     parser = argparse.ArgumentParser(description="Lets you control your smart lamps at home.")
-    parser.add_argument("-c", "--config", type=str, default="~/.config/lights/config.json", help="Path to a config.json file that can be used to configure lights (as an alternative to using env vars or args).")
+    parser.add_argument("-c", "--config", type=str, default=f"{pathlib.Path.home()}/.config/lights/config.json", help="Path to a config.json file that can be used to configure lights (as an alternative to using env vars or args).")
     parser.add_argument("-b", "--hue-bridge-ip", type=str, help="The IP of your Hue bridge.")
     parser.add_argument("-n", "--name", type=str, help="Optionally a single, selected light's name. By default, all lights are selected.")
     parser.add_argument("command", nargs=argparse.REMAINDER, help="The command to invoke.")
@@ -73,7 +73,7 @@ def main():
         with open(config_path, "r") as f:
             config = json.loads(f.read())
 
-    hue_bridge_ip = args.hue_bridge_ip or os.environ.get("LIGHTS_HUE_BRIDGE_IP") or next((system["bridge-ip"] for system in config.get("systems", []) if system["type"] == "type"), None)
+    hue_bridge_ip = args.hue_bridge_ip or os.environ.get("LIGHTS_HUE_BRIDGE_IP") or next((system["bridge-ip"] for system in config.get("systems", []) if system["type"] == "hue"), None)
     name = args.name or os.environ.get("LIGHTS_NAME") or config.get("default-light", None)
     command = args.command
 
