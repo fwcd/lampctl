@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 @dataclass
 class HSBColor:
-    """A hue-saturation-brightness color."""
+    """A hue-saturation-brightness color (with each component in the range [0, 1])."""
     hue: float = 0
     saturation: float = 1
     brightness: float = 1
