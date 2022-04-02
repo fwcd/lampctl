@@ -3,6 +3,7 @@ import json
 import os
 import pathlib
 from typing import List
+from unittest.mock import DEFAULT
 
 from lights.combined import CombinedLightSystem
 from lights.light import Light, LightSystem
@@ -39,7 +40,7 @@ def color_command(p: CommandParams):
     try:
         color = COLORS[p.args[0]]
     except:
-        raise ValueError(f"Unrecognized color, try one of these: {', '.join(COLORS.keys)}")
+        raise ValueError(f"Unrecognized color, try one of these: {', '.join(COLORS.keys())}")
 
     for light in p.lights:
         light.color = color
@@ -47,6 +48,8 @@ def color_command(p: CommandParams):
 def toggle_command(p: CommandParams):
     for light in p.lights:
         light.toggle()
+
+DEFAULT_CONFIG_PATH = pathlib.Path.home() / ".config" / "lights" / "config.json"
 
 COMMANDS = {
     "list": list_command,
@@ -63,9 +66,10 @@ SYSTEMS = {
 
 def main():
     parser = argparse.ArgumentParser(description="Lets you control your smart lamps at home.")
-    parser.add_argument("-c", "--config", type=str, default=f"{pathlib.Path.home()}/.config/lights/config.json", help="Path to a config.json file that can be used to configure lights (as an alternative to using env vars or args).")
+    parser.add_argument("-c", "--config", type=str, required=not DEFAULT_CONFIG_PATH.exists(), default=str(DEFAULT_CONFIG_PATH), help="Path to a config.json file that can be used to configure lights.")
     parser.add_argument("-n", "--name", type=str, help="Optionally a single, selected light's name. By default, all lights are selected.")
-    parser.add_argument("command", nargs=argparse.REMAINDER, help="The command to invoke.")
+    parser.add_argument("command", type=str, choices=sorted(COMMANDS.keys()), help="The command to invoke.")
+    parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments to the command to invoke.")
 
     args = parser.parse_args()
 
@@ -77,7 +81,8 @@ def main():
             config = json.loads(f.read())
 
     name = args.name or os.environ.get("LIGHTS_NAME") or config.get("default-light", None)
-    command = args.command
+    command_name = args.command
+    command_args = args.args
 
     # Set up light systems
     system = CombinedLightSystem()
@@ -98,12 +103,9 @@ def main():
         selected = system.lights
 
     # Perform user-invoked command
+    command = COMMANDS.get(command_name, None)
     if command:
-        f = COMMANDS.get(command[0], None)
-        if f:
-            f(CommandParams(selected, system, command[1:]))
-        else:
-            print(f"Unrecognized command name {command[0]}. Try one of these: {', '.join(COMMANDS.keys())}")
+        command(CommandParams(selected, system, command_args))
     else:
-        print(f"Unrecognized command invocation: {command}")
+        print(f"Unrecognized command name {command_name}. Try one of these: {', '.join(COMMANDS.keys())}")
 
