@@ -1,10 +1,10 @@
+from dataclasses import dataclass
+from typing import Callable
+
 import argparse
 import json
 import os
 import pathlib
-
-from dataclasses import dataclass
-from typing import Callable
 
 from lights.system import Light, LightSystem
 from lights.system.combined import CombinedLightSystem
