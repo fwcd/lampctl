@@ -45,6 +45,8 @@ lights -n "My Lamp" on  # turn light with name `MyLamp` on
     * Activate the venv using `source venv/bin/activate`
 * Make sure that Wheel is installed using `pip3 install wheel`
 * Finally install the dependencies with `pip3 install -r requirements.txt`
+* Now you can run `lights` with `python3 -m lights ...`
+* To run the test suite, invoke `python3 -m unittest` in this directory
 
 ## Installation
 
