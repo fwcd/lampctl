@@ -14,6 +14,7 @@ from lights.utils.color import COLORS
 class Options:
     lights: list[Light]
     system: LightSystem
+    verbose: bool
     args: list[str]
 
 def list_command(opts: Options):
@@ -23,18 +24,29 @@ def on_command(opts: Options):
     for light in opts.lights:
         light.on = True
 
+        if opts.verbose:
+            print(f"{light.name} is now {'on' if light.on else 'off'}")
+
 def off_command(opts: Options):
     for light in opts.lights:
         light.on = False
+
+        if opts.verbose:
+            print(f"{light.name} is now {'on' if light.on else 'off'}")
 
 def dim_command(opts: Options):
     try:
         arg = float(opts.args[0])
     except:
         raise ValueError("Please enter an integer between 0 and 100!")
+    
+    brightness = arg / 100
 
     for light in opts.lights:
-        light.brightness = arg / 100
+        light.brightness = brightness
+    
+        if opts.verbose:
+            print(f"{light.name}'s brightness is now {light.brightness}")
 
 def color_command(opts: Options):
     if opts.args:
@@ -48,6 +60,9 @@ def color_command(opts: Options):
     for light in opts.lights:
         light.color = color
 
+        if opts.verbose:
+            print(f"{light.name}'s color is now {light.color}")
+
 def temp_command(opts: Options):
     try:
         arg = float(opts.args[0])
@@ -59,10 +74,16 @@ def temp_command(opts: Options):
 
     for light in opts.lights:
         light.color = color
+    
+        if opts.verbose:
+            print(f"{light.name}'s color is now {light.color}")
 
 def toggle_command(opts: Options):
     for light in opts.lights:
         light.toggle()
+
+        if opts.verbose:
+            print(f"{light.name} is now {'on' if light.on else 'off'}")
 
 DEFAULT_CONFIG_PATH = pathlib.Path.home() / ".config" / "lights" / "config.json"
 
@@ -85,8 +106,9 @@ def main():
     parser.add_argument("--config", type=str, required=not DEFAULT_CONFIG_PATH.exists(), default=str(DEFAULT_CONFIG_PATH), help="Path to a config.json file that can be used to configure lights.")
     parser.add_argument("-n", "--name", type=str, help="A single, selected light's name. If a default light is set in the config file, this argument can be omitted.")
     parser.add_argument("-a", "--all", action="store_true", help="Selects all lights.")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Logs more verbosely.")
     parser.add_argument("command", type=str, choices=sorted(COMMANDS.keys()), help="The command to invoke.")
-    parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments to the command to invoke.")
+    parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments for the command to invoke.")
 
     args = parser.parse_args()
 
@@ -99,6 +121,7 @@ def main():
 
     name = args.name or os.environ.get("LIGHTS_NAME") or config.get("default-light", None)
     select_all = args.all
+    verbose = args.verbose
     command_name = args.command
     command_args = args.args
 
@@ -119,10 +142,10 @@ def main():
         selected = system.lights
     elif name:
         selected = system.lights_with_name(name)
-    else:
+    elif verbose:
         print("Warning: No lights selected (you can set a specific light with -n or pick all with --all)")
 
     # Perform user-invoked command
     command = COMMANDS.get(command_name, None)
-    command(Options(selected, system, command_args))
+    command(Options(selected, system, verbose, command_args))
 
