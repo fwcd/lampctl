@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "Lights configuration",
+  "type": "object",
+  "description": "The configuration for lights",
+  "definitions": {
+    "system": {
+      "description": "A system providing lights to control",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/hue-system"
+        }
+      ]
+    },
+    "hue-system": {
+      "type": "object",
+      "description": "A Philips Hue-based light system",
+      "properties": {
+        "bridgeIP": {
+          "type": "string",
+          "description": "The IP address of the Hue bridge"
+        }
+      }
+    }
+  },
+  "properties": {
+    "systems": {
+      "type": "array",
+      "description": "The light systems",
+      "items": {
+        "$ref": "#/definitions/system"
+      }
+    },
+    "default-light": {
+      "type": "string",
+      "description": "The name of a light to use by default if no other is specified e.g. using the '-n' flag."
+    }
+  }
+}

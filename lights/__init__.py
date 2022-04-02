@@ -73,8 +73,8 @@ def main():
         with open(config_path, "r") as f:
             config = json.loads(f.read())
 
-    hue_bridge_ip = args.hue_bridge_ip or os.environ.get("LIGHTS_HUE_BRIDGE_IP") or next((system["bridge_ip"] for system in config.get("systems", []) if system["type"] == "type"), None)
-    name = args.name or os.environ.get("LIGHTS_NAME") or config.get("default_light", None)
+    hue_bridge_ip = args.hue_bridge_ip or os.environ.get("LIGHTS_HUE_BRIDGE_IP") or next((system["bridge-ip"] for system in config.get("systems", []) if system["type"] == "type"), None)
+    name = args.name or os.environ.get("LIGHTS_NAME") or config.get("default-light", None)
     command = args.command
 
     # Setup light system
