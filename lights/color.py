@@ -13,8 +13,9 @@ class HSBColor:
         return f"(H: {self.hue:.3f}, S: {self.saturation:.3f}, B: {self.brightness:.3f})"
 
 COLORS = {
-    "white": HSBColor(brightness=1, saturation=0),
-    "black": HSBColor(brightness=0, saturation=0),
+    "default": HSBColor(hue=0.149, saturation=0.551),
+    "white": HSBColor(saturation=0, brightness=1),
+    "black": HSBColor(saturation=0, brightness=0),
     "red": HSBColor(hue=0),
     "orange": HSBColor(hue=0.08),
     "yellow": HSBColor(hue=0.17),
