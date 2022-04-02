@@ -8,9 +8,9 @@ Currently only Philips Hue lamps are supported, but adding support for other bac
 
 ## Usage
 
-`lights [-h] [-b HUE_BRIDGE_IP] [-n NAME] ...`
+`lights [-h] [-c CONFIG] [-n NAME] [command] ...`
 
-> Note that you can alternatively provide the environment variables `LIGHTS_HUE_BRIDGE_IP` and `LIGHTS_NAME`.
+> Note that you can alternatively provide the environment variable `LIGHTS_NAME` to specify the light to control.
 
 > If no lights are selected, the tool will automatically select all of the available lights.
 
