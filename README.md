@@ -22,17 +22,21 @@ To use, first create the file `~/.config/lights/config.json` pointing to your li
 }
 ```
 
-> If no `default-light` is set you can use the environment variable `LIGHTS_NAME` or `-n` to specify the light to control.
+> If no `default-light` is set you can use the environment variable `LIGHTS_NAME` or `-n` to select a light to control.
 
 Now you can use the CLI to control your lights. For example:
 
-* `lights on`
-* `lights off`
-* `lights toggle`
-* `lights color blue`
-* `lights dim 50`
-* `lights --all on`
-* `lights -n "My Lamp" on`
+```sh
+lights on               # turn selected lights on
+lights off              # turn selected lights off
+lights toggle           # toggle selected lights
+lights color blue       # set selected lights to blue
+lights dim 50           # dim selected lights to 50%
+lights --all on         # turn all lights on
+lights list             # list all lights
+lights status           # list selected lights
+lights -n "My Lamp" on  # turn light with name `MyLamp` on
+```
 
 ## Development
 

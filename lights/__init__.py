@@ -41,10 +41,17 @@ def update_colors(new_color: Callable[[HSBColor], HSBColor], opts: Options):
         if opts.verbose:
             print(f"{light.name}'s color is now {light.color}")
 
+def list_lights(lights: list[Light]):
+    for light in lights:
+        print(f"{light.name:>15} ({f'on={light.on}':<8}, brightness={light.brightness:.2f}, color={light.color})")
+
 # Commands
 
 def list_command(opts: Options):
-    print("\n".join(f"{l.name:>15} ({f'on={l.on}':<8}, brightness={l.brightness:.2f}, color={l.color})" for l in opts.system.lights))
+    list_lights(opts.system.lights)
+
+def status_command(opts: Options):
+    list_lights(opts.lights)
 
 def on_command(opts: Options):
     update_onoff(lambda _: True, opts)
@@ -89,6 +96,7 @@ def temp_command(opts: Options):
 
 COMMANDS = {
     "list": list_command,
+    "status": status_command,
     "on": on_command,
     "off": off_command,
     "toggle": toggle_command,
