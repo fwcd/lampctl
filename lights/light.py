@@ -1,5 +1,6 @@
 from typing import List
-from .color import HSBColor
+
+from lights.color import HSBColor
 
 class Light:
     @property
