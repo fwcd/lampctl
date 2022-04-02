@@ -1,10 +1,11 @@
+from dataclasses import dataclass
+
+@dataclass
 class HSBColor:
     """A hue-saturation-brightness color."""
-
-    def __init__(self, hue: float = 0, saturation: float = 1, brightness: float = 1):
-        self.hue = hue
-        self.saturation = saturation
-        self.brightness = brightness
+    hue: float = 0
+    saturation: float = 1
+    brightness: float = 1
     
     def average(self, other):
         return HSBColor((self.hue + other.hue) / 2, (self.saturation + other.saturation) / 2, (self.brightness + other.brightness) / 2)
