@@ -15,6 +15,8 @@ class HSBColor:
 COLORS = {
     "default": HSBColor(hue=0.149, saturation=0.551),
     "white": HSBColor(saturation=0, brightness=1),
+    "warm": HSBColor(hue=0.127, saturation=0.886),
+    "cold": HSBColor(hue=0.733, saturation=0.307),
     "black": HSBColor(saturation=0, brightness=0),
     "red": HSBColor(hue=0),
     "orange": HSBColor(hue=0.08),
