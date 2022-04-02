@@ -10,45 +10,45 @@ from lights.color import COLORS
 from lights.hue import HueSystem
 
 @dataclass
-class CommandParams:
+class Options:
     lights: list[Light]
     system: LightSystem
     args: list[str]
 
-def list_command(p: CommandParams):
-    print("\n".join(f"{l.name:>15} ({f'on={l.on}':<8}, brightness={l.brightness:.2f}, color={l.color})" for l in p.system.lights))
+def list_command(opts: Options):
+    print("\n".join(f"{l.name:>15} ({f'on={l.on}':<8}, brightness={l.brightness:.2f}, color={l.color})" for l in opts.system.lights))
 
-def on_command(p: CommandParams):
-    for light in p.lights:
+def on_command(opts: Options):
+    for light in opts.lights:
         light.on = True
 
-def off_command(p: CommandParams):
-    for light in p.lights:
+def off_command(opts: Options):
+    for light in opts.lights:
         light.on = False
 
-def dim_command(p: CommandParams):
+def dim_command(opts: Options):
     try:
-        arg = float(p.args[0])
+        arg = float(opts.args[0])
     except:
         raise ValueError("Please enter an integer between 0 and 100!")
 
-    for light in p.lights:
+    for light in opts.lights:
         light.brightness = arg / 100
 
-def color_command(p: CommandParams):
-    if p.args:
+def color_command(opts: Options):
+    if opts.args:
         try:
-            color = COLORS[p.args[0]]
+            color = COLORS[opts.args[0]]
         except:
             raise ValueError(f"Unrecognized color, try one of these: {', '.join(COLORS.keys())}")
     else:
         color = COLORS["default"]
 
-    for light in p.lights:
+    for light in opts.lights:
         light.color = color
 
-def toggle_command(p: CommandParams):
-    for light in p.lights:
+def toggle_command(opts: Options):
+    for light in opts.lights:
         light.toggle()
 
 DEFAULT_CONFIG_PATH = pathlib.Path.home() / ".config" / "lights" / "config.json"
@@ -110,5 +110,5 @@ def main():
 
     # Perform user-invoked command
     command = COMMANDS.get(command_name, None)
-    command(CommandParams(selected, system, command_args))
+    command(Options(selected, system, command_args))
 
