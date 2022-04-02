@@ -2,19 +2,18 @@ import argparse
 import json
 import os
 import pathlib
-from typing import List
-from unittest.mock import DEFAULT
 
+from dataclasses import dataclass
 from lights.combined import CombinedLightSystem
 from lights.light import Light, LightSystem
 from lights.color import COLORS
 from lights.hue import HueSystem
 
+@dataclass
 class CommandParams:
-    def __init__(self, lights: List[Light], system: LightSystem, args: List[str]):
-        self.lights = lights
-        self.system = system
-        self.args = args
+    lights: list[Light]
+    system: LightSystem
+    args: list[str] = []
 
 def list_command(p: CommandParams):
     print("\n".join(f"{l.name:>15} ({f'on={l.on}':<8}, brightness={l.brightness:.2f}, color={l.color})" for l in p.system.lights))
