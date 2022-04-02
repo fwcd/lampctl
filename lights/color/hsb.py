@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from __future__ import annotations
 
 @dataclass
 class HSBColor:
@@ -6,21 +7,21 @@ class HSBColor:
     hue: float = 0
     saturation: float = 1
     brightness: float = 1
-    
-    def average(self, other):
+
+    def average(self, other: HSBColor) -> HSBColor:
         return HSBColor((self.hue + other.hue) / 2, (self.saturation + other.saturation) / 2, (self.brightness + other.brightness) / 2)
     
-    def __add__(self, other):
+    def __add__(self, other: HSBColor) -> HSBColor:
         if not isinstance(other, HSBColor):
             raise TypeError(f"Unsupported operand types for +: 'HSBColor' and '{type(other).__name__}'")
         return HSBColor(self.hue + other.hue, self.saturation + other.saturation, self.brightness + other.brightness)
     
-    def __mul__(self, other):
+    def __mul__(self, other: HSBColor) -> HSBColor:
         if not isinstance(other, float):
             raise TypeError(f"Unsupported operand types for *: 'HSBColor' and '{type(other).__name__}'")
         return HSBColor(self.hue * other, self.saturation * other, self.brightness * other)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"(hue={self.hue:.3f}, saturation={self.saturation:.3f}, brightness={self.brightness:.3f})"
 
 HSB_COLORS = {

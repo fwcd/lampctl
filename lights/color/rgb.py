@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from __future__ import annotations
 
 @dataclass
 class RGBColor:
@@ -7,20 +8,20 @@ class RGBColor:
     green: float = 0
     blue: float = 0
 
-    def average(self, other):
+    def average(self, other: RGBColor) -> RGBColor:
         return RGBColor((self.red + other.red) / 2, (self.green + other.green) / 2, (self.blue + other.blue) / 2)
     
-    def __add__(self, other):
+    def __add__(self, other: RGBColor) -> RGBColor:
         if not isinstance(other, RGBColor):
             raise TypeError(f"Unsupported operand types for +: 'RGBColor' and '{type(other).__name__}'")
         return RGBColor(self.red + other.red, self.green + other.green, self.blue + other.blue)
     
-    def __mul__(self, other):
+    def __mul__(self, other: RGBColor) -> RGBColor:
         if not isinstance(other, float):
             raise TypeError(f"Unsupported operand types for *: 'RGBColor' and '{type(other).__name__}'")
         return RGBColor(self.red * other, self.green * other, self.blue * other)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"(red={self.red:.3f}, green={self.green:.3f}, blue={self.blue:.3f})"
 
 RGB_COLORS = {
