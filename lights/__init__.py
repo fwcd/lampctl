@@ -110,8 +110,5 @@ def main():
 
     # Perform user-invoked command
     command = COMMANDS.get(command_name, None)
-    if command:
-        command(CommandParams(selected, system, command_args))
-    else:
-        print(f"Unrecognized command name {command_name}. Try one of these: {', '.join(COMMANDS.keys())}")
+    command(CommandParams(selected, system, command_args))
 
