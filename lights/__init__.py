@@ -9,7 +9,7 @@ from typing import Callable
 from lights.system import Light, LightSystem
 from lights.system.combined import CombinedLightSystem
 from lights.system.hue import HueSystem
-from lights.utils.color import COLORS
+from lights.utils.color import HSBColor, COLORS
 
 @dataclass
 class Options:
@@ -20,12 +20,26 @@ class Options:
 
 # Helpers
 
-def update_onoff(should_be_on: Callable[[bool], bool], opts: Options):
+def update_onoff(new_on: Callable[[bool], bool], opts: Options):
     for light in opts.lights:
-        light.on = should_be_on(light.on)
+        light.on = new_on(light.on)
 
         if opts.verbose:
             print(f"{light.name} is now {'on' if light.on else 'off'}")
+
+def update_brightnesses(new_brightness: Callable[[float], float], opts: Options):
+    for light in opts.lights:
+        light.brightness = new_brightness(light.brightness)
+    
+        if opts.verbose:
+            print(f"{light.name}'s brightness is now {light.brightness}")
+
+def update_colors(new_color: Callable[[HSBColor], HSBColor], opts: Options):
+    for light in opts.lights:
+        light.color = new_color(light.color)
+
+        if opts.verbose:
+            print(f"{light.name}'s color is now {light.color}")
 
 # Commands
 
@@ -48,12 +62,7 @@ def dim_command(opts: Options):
         raise ValueError("Please enter an integer between 0 and 100!")
     
     brightness = arg / 100
-
-    for light in opts.lights:
-        light.brightness = brightness
-    
-        if opts.verbose:
-            print(f"{light.name}'s brightness is now {light.brightness}")
+    update_brightnesses(lambda _: brightness, opts)
 
 def color_command(opts: Options):
     if opts.args:
@@ -63,12 +72,8 @@ def color_command(opts: Options):
             raise ValueError(f"Unrecognized color, try one of these: {', '.join(COLORS.keys())}")
     else:
         color = COLORS["default"]
-
-    for light in opts.lights:
-        light.color = color
-
-        if opts.verbose:
-            print(f"{light.name}'s color is now {light.color}")
+    
+    update_colors(lambda _: color, opts)
 
 def temp_command(opts: Options):
     try:
@@ -78,12 +83,9 @@ def temp_command(opts: Options):
     
     factor = arg / 100
     color = COLORS["cold"] * (1 - factor) + COLORS["warm"] * factor
+    update_colors(lambda _: color, opts)
 
-    for light in opts.lights:
-        light.color = color
-    
-        if opts.verbose:
-            print(f"{light.name}'s color is now {light.color}")
+# Constants
 
 COMMANDS = {
     "list": list_command,
@@ -100,6 +102,8 @@ SYSTEMS = {
 }
 
 DEFAULT_CONFIG_PATH = pathlib.Path.home() / ".config" / "lights" / "config.json"
+
+# Main
 
 def main():
     parser = argparse.ArgumentParser(description="Lets you control your smart lamps at home.")
