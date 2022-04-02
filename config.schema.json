@@ -6,9 +6,21 @@
   "definitions": {
     "system": {
       "description": "A system providing lights to control",
-      "anyOf": [
+      "allOf": [
         {
-          "$ref": "#/definitions/hue-system"
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["hue"],
+              "description": "The type of light system"
+            }
+          }
+        },
+        {
+          "oneOf": [
+            { "$ref": "#/definitions/hue-system" }
+          ]
         }
       ]
     },
@@ -16,7 +28,10 @@
       "type": "object",
       "description": "A Philips Hue-based light system",
       "properties": {
-        "bridgeIP": {
+        "type": {
+          "const": "hue"
+        },
+        "bridge-ip": {
           "type": "string",
           "description": "The IP address of the Hue bridge"
         }
