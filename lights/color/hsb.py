@@ -25,7 +25,7 @@ class HSBColor:
         b = self.brightness
         c = self.chroma
         h_segment = math.floor(h * 6.0)
-        x = c * (1 - abs(h_segment % 2 - 1))
+        x = c * (1.0 - float(abs(h_segment % 2 - 1)))
 
         if   h_segment == 0: (r0, g0, b0) = (c, x, 0.0)
         elif h_segment == 1: (r0, g0, b0) = (x, c, 0.0)
