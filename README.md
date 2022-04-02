@@ -21,6 +21,7 @@ Examples:
 * `lights toggle`
 * `lights color blue`
 * `lights dim 50`
+* `lights --all on`
 * `lights -n "My Lamp" on`
 
 ## Development

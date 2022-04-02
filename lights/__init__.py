@@ -67,7 +67,8 @@ SYSTEMS = {
 def main():
     parser = argparse.ArgumentParser(description="Lets you control your smart lamps at home.")
     parser.add_argument("-c", "--config", type=str, required=not DEFAULT_CONFIG_PATH.exists(), default=str(DEFAULT_CONFIG_PATH), help="Path to a config.json file that can be used to configure lights.")
-    parser.add_argument("-n", "--name", type=str, help="Optionally a single, selected light's name. By default, all lights are selected.")
+    parser.add_argument("-n", "--name", type=str, help="A single, selected light's name. If a default light is set in the config file, this argument can be omitted.")
+    parser.add_argument("-a", "--all", action="store_true", help="Selects all lights.")
     parser.add_argument("command", type=str, choices=sorted(COMMANDS.keys()), help="The command to invoke.")
     parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments to the command to invoke.")
 
@@ -81,6 +82,7 @@ def main():
             config = json.loads(f.read())
 
     name = args.name or os.environ.get("LIGHTS_NAME") or config.get("default-light", None)
+    select_all = args.all
     command_name = args.command
     command_args = args.args
 
@@ -97,10 +99,12 @@ def main():
 
     # Select lamp
     selected = []
-    if name:
+    if select_all:
+        selected = system.lights
+    elif name:
         selected = system.lights_with_name(name)
     else:
-        selected = system.lights
+        print("Warning: No lights selected (you can set a specific light with -n or pick all with --all)")
 
     # Perform user-invoked command
     command = COMMANDS.get(command_name, None)
