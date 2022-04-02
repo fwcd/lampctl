@@ -1,4 +1,4 @@
-from lights.utils.color import HSBColor
+from lights.color.hsb import HSBColor
 
 class Light:
     @property

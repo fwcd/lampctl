@@ -9,7 +9,7 @@ from typing import Callable
 from lights.system import Light, LightSystem
 from lights.system.combined import CombinedLightSystem
 from lights.system.hue import HueSystem
-from lights.utils.color import HSBColor, COLORS
+from lights.color.hsb import HSBColor, HSB_COLORS
 
 @dataclass
 class Options:
@@ -74,11 +74,11 @@ def dim_command(opts: Options):
 def color_command(opts: Options):
     if opts.args:
         try:
-            color = COLORS[opts.args[0]]
+            color = HSB_COLORS[opts.args[0]]
         except:
-            raise ValueError(f"Unrecognized color, try one of these: {', '.join(COLORS.keys())}")
+            raise ValueError(f"Unrecognized color, try one of these: {', '.join(HSB_COLORS.keys())}")
     else:
-        color = COLORS["default"]
+        color = HSB_COLORS["default"]
     
     update_colors(lambda _: color, opts)
 
@@ -89,7 +89,7 @@ def temp_command(opts: Options):
         raise ValueError("Please specify an integer between 0 (cold) and 100 (warm)!")
     
     factor = arg / 100
-    color = COLORS["cold"] * (1 - factor) + COLORS["warm"] * factor
+    color = HSB_COLORS["cold"] * (1 - factor) + HSB_COLORS["warm"] * factor
     update_colors(lambda _: color, opts)
 
 # Constants

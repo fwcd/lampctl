@@ -23,7 +23,7 @@ class HSBColor:
     def __str__(self):
         return f"(hue={self.hue:.3f}, saturation={self.saturation:.3f}, brightness={self.brightness:.3f})"
 
-COLORS = {
+HSB_COLORS = {
     "default": HSBColor(hue=0.149, saturation=0.551),
     "white": HSBColor(saturation=0, brightness=1),
     "warm": HSBColor(hue=0.127, saturation=0.886),

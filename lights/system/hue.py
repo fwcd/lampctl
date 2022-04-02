@@ -1,7 +1,7 @@
 import phue
 
 from lights.system import Light, LightSystem
-from lights.utils.color import HSBColor
+from lights.color.hsb import HSBColor
 
 HUE_FACTOR = 56635
 SATURATION_FACTOR = 254
