@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="lights",
     version="0.1.0",
-    packages=["lights"],
+    packages=find_packages(),
     install_requires=[
         "phue==1.1"
     ],
