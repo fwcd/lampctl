@@ -8,7 +8,7 @@ SATURATION_FACTOR = 254
 BRIGHTNESS_FACTOR = 254
 
 class HueLight(Light):
-    def __init__(self, hue_light):
+    def __init__(self, hue_light: phue.Light):
         self.hue_light = hue_light
     
     @property
@@ -22,6 +22,14 @@ class HueLight(Light):
     @brightness.setter
     def brightness(self, value: float):
         self.hue_light.brightness = int(value * BRIGHTNESS_FACTOR)
+
+    @property
+    def transition_time(self) -> float:
+        return float(self.hue_light.transitiontime) / 10
+
+    @transition_time.setter
+    def transition_time(self, value: float):
+        self.hue_light.transitiontime = int(value * 10)
     
     @property
     def on(self) -> bool:

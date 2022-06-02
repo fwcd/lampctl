@@ -9,7 +9,7 @@ class Light:
     @property
     def brightness(self) -> float:
         """Fetches the brightness of the lamp (on the range [0, 1])."""
-        return None
+        raise NotImplementedError("Fetching the brightness is not supported")
 
     @brightness.setter
     def brightness(self, value: float):
@@ -17,9 +17,19 @@ class Light:
         raise NotImplementedError("Setting the brightness is not supported")
 
     @property
+    def transition_time(self) -> float:
+        """Fetches the transitioning time of the lamp (in seconds)."""
+        raise NotImplementedError("Fetching the transition time is not supported")
+
+    @transition_time.setter
+    def transition_time(self, value: float):
+        """Sets the transition time of the lamp (in seconds)."""
+        raise NotImplementedError("Setting the transition time is not supported")
+
+    @property
     def on(self) -> bool:
         """Whether the lamp is activated."""
-        return None
+        return False
 
     @on.setter
     def on(self, value: bool):
@@ -32,7 +42,7 @@ class Light:
     @property
     def color(self) -> HSBColor:
         """Fetches the RGB color of the lamp."""
-        return None
+        raise NotImplementedError("Fetching the color is not supported")
 
     @color.setter
     def color(self, color: HSBColor):
