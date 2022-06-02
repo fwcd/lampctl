@@ -119,6 +119,7 @@ def main():
     parser.add_argument("-n", "--name", type=str, help="A single, selected light's name. If a default light is set in the config file, this argument can be omitted.")
     parser.add_argument("-a", "--all", action="store_true", help="Selects all lights.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Logs more verbosely.")
+    parser.add_argument("-t", "--transition-time", type=float, help="The transition time in seconds.")
     parser.add_argument("command", type=str, choices=sorted(COMMANDS.keys()), help="The command to invoke.")
     parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments for the command to invoke.")
 
@@ -136,6 +137,7 @@ def main():
     verbose = args.verbose
     command_name = args.command
     command_args = args.args
+    transition_time = args.transition_time
 
     # Set up light systems
     system = CombinedLightSystem()
@@ -156,6 +158,11 @@ def main():
         selected = system.lights_with_name(name)
     elif verbose:
         print("Warning: No lights selected (you can set a specific light with -n or pick all with --all)")
+
+    # Set transition times if specified
+    if transition_time is not None:
+        for light in selected:
+            light.transition_time = transition_time
 
     # Perform user-invoked command
     command = COMMANDS.get(command_name, None)
