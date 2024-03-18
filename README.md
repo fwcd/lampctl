@@ -1,5 +1,6 @@
 # Lampctl
 
+[![PyPI](https://img.shields.io/pypi/v/lampctl)](https://pypi.org/project/lampctl)
 [![Test](https://github.com/fwcd/lampctl/actions/workflows/test.yml/badge.svg)](https://github.com/fwcd/lampctl/actions/workflows/test.yml)
 
 A small CLI utility for controlling smart lamps.
