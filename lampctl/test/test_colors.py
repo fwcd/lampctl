@@ -1,7 +1,7 @@
 import unittest
 
-from lights.color.hsb import HSB_COLORS
-from lights.color.rgb import RGB_COLORS
+from lampctl.color.hsb import HSB_COLORS
+from lampctl.color.rgb import RGB_COLORS
 
 class TestColors(unittest.TestCase):
     def test_hsb_to_rgb(self):

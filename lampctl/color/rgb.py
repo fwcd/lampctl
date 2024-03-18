@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import math
-import lights.color.hsb as hsb
+import lampctl.color.hsb as hsb
 
 @dataclass
 class RGBColor:

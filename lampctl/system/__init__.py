@@ -1,6 +1,6 @@
-from lights.color.hsb import HSBColor
+from lampctl.color.hsb import HSBColor
 
-class Light:
+class Lamp:
     @property
     def name(self) -> str:
         """Fetches the lamp's name."""
@@ -52,19 +52,19 @@ class Light:
     def __str__(self):
         return f"{self.name} (on={self.on}, brightness={self.brightness}, color={self.color})"
 
-class LightSystem:
+class LampSystem:
     def connect(self):
-        """If required by the implementation, connects to the light system."""
+        """If required by the implementation, connects to the lamp system."""
         pass
 
     @property
-    def lights(self) -> list[Light]:
-        """lists the available lights."""
-        raise NotImplementedError("Cannot fetch lights")
+    def lamps(self) -> list[Lamp]:
+        """lists the available lamps."""
+        raise NotImplementedError("Cannot fetch lamps")
     
-    def lights_with_name(self, name: str) -> list[Light]:
-        lights = [l for l in self.lights if l.name == name]
-        if lights:
-            return lights
+    def lamps_with_name(self, name: str) -> list[Lamp]:
+        lamps = [l for l in self.lamps if l.name == name]
+        if lamps:
+            return lamps
         else:
-            raise ValueError(f"No light with name {name} found")
+            raise ValueError(f"No lamp with name {name} found")

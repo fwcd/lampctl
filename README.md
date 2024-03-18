@@ -1,16 +1,16 @@
-# Lights
+# Lampctl
 
-[![Test](https://github.com/fwcd/lights/actions/workflows/test.yml/badge.svg)](https://github.com/fwcd/lights/actions/workflows/test.yml)
+[![Test](https://github.com/fwcd/lampctl/actions/workflows/test.yml/badge.svg)](https://github.com/fwcd/lampctl/actions/workflows/test.yml)
 
-A small CLI utility for controlling your smart lamps at home.
+A small CLI utility for controlling smart lamps.
 
-![Icon](lights-icon.png)
+![Icon](icon.png)
 
 Currently only Philips Hue lamps are supported, but adding support for other backends is easy.
 
 ## Usage
 
-To use, first create the file `~/.config/lights/config.json` pointing to your light systems:
+To use, first create the file `~/.config/lampctl/config.json` pointing to your lamp systems:
 
 ```json
 {
@@ -20,24 +20,24 @@ To use, first create the file `~/.config/lights/config.json` pointing to your li
       "bridge-ip": "your.ip.here"
     }
   ],
-  "default-light": "My Lamp"
+  "default-lamp": "My Lamp"
 }
 ```
 
-> If no `default-light` is set you can use the environment variable `LIGHTS_NAME` or `-n` to select a light to control.
+> If no `default-lamp` is set you can use the environment variable `DEFAULT_LAMP` or `-n` to select a lamp to control.
 
-Now you can use the CLI to control your lights. For example:
+Now you can use the CLI to control your lamps. For example:
 
 ```sh
-lights on               # turn selected lights on
-lights off              # turn selected lights off
-lights toggle           # toggle selected lights
-lights color blue       # set selected lights to blue
-lights dim 50           # dim selected lights to 50%
-lights --all on         # turn all lights on
-lights list             # list all lights
-lights status           # list selected lights
-lights -n "My Lamp" on  # turn light with name `MyLamp` on
+lampctl on               # turn selected lamp on
+lampctl off              # turn selected lamp off
+lampctl toggle           # toggle selected lamps
+lampctl color blue       # set selected lamps to blue
+lampctl dim 50           # dim selected lamps to 50%
+lampctl --all on         # turn all lamps on
+lampctl list             # list all lamps
+lampctl status           # list selected lamps
+lampctl -n "My Lamp" on  # turn lamp with name `MyLamp` on
 ```
 
 ## Development
@@ -47,11 +47,11 @@ lights -n "My Lamp" on  # turn light with name `MyLamp` on
     * Activate the venv using `source venv/bin/activate`
 * Make sure that Wheel is installed using `pip3 install wheel`
 * Finally install the dependencies with `pip3 install -r requirements.txt`
-* Now you can run `lights` with `python3 -m lights ...`
+* Now you can run `lampctl` with `python3 -m lampctl ...`
 * To run the test suite, invoke `python3 -m unittest` in this directory
 
 ## Installation
 
 * First make sure you are not in a virtual environment
 * Then run `pip3 install .`
-* If your Python packages are available on your `PATH` you should now be able to invoke `lights` from anywhere
+* If your Python packages are available on your `PATH` you should now be able to invoke `lampctl` from anywhere

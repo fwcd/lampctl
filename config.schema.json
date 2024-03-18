@@ -1,11 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "title": "Lights configuration",
+  "title": "Lampctl configuration",
   "type": "object",
-  "description": "The configuration for lights",
+  "description": "The configuration for lampctl",
   "definitions": {
     "system": {
-      "description": "A system providing lights to control",
+      "description": "A system providing lamps to control",
       "allOf": [
         {
           "type": "object",
@@ -13,7 +13,7 @@
             "type": {
               "type": "string",
               "enum": ["hue"],
-              "description": "The type of light system"
+              "description": "The type of lamp system"
             }
           }
         },
@@ -26,7 +26,7 @@
     },
     "hue-system": {
       "type": "object",
-      "description": "A Philips Hue-based light system",
+      "description": "A Philips Hue-based lamp system",
       "properties": {
         "type": {
           "const": "hue"
@@ -41,14 +41,14 @@
   "properties": {
     "systems": {
       "type": "array",
-      "description": "The light systems",
+      "description": "The lamp systems",
       "items": {
         "$ref": "#/definitions/system"
       }
     },
-    "default-light": {
+    "default-lamp": {
       "type": "string",
-      "description": "The name of a light to use by default if no other is specified e.g. using the '-n' flag."
+      "description": "The name of a lamp to use by default if no other is specified e.g. using the '-n' flag."
     }
   }
 }
