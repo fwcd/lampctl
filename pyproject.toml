@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lampctl"
+version = "0.1.0"
+description = "CLI utility for controlling smart lamps"
+readme = "README.md"
+classifiers = ["Topic :: Utilities"]
+dependencies = [
+  "phue >= 1.1, < 2"
+]
+
+[project.urls]
+Homepage = "https://github.com/fwcd/lampctl"
+Repository = "https://github.com/fwcd/lampctl"
+
+[project.scripts]
+lampctl = "lampctl:main"
+
+[tool.setuptools.packages]
+find = {}
+
+[tool.pyright]
+include = ["lampctl"]
