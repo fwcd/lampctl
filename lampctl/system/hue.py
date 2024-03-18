@@ -62,4 +62,4 @@ class HueSystem(LampSystem):
 
     @property
     def lamps(self) -> list[Lamp]:
-        return [HueLamp(l) for l in self.bridge.lamps]
+        return [HueLamp(l) for l in self.bridge.lights]
