@@ -8,7 +8,7 @@ SATURATION_FACTOR = 254
 BRIGHTNESS_FACTOR = 254
 
 class HueLamp(Lamp):
-    def __init__(self, hue_lamp: phue.Lamp):
+    def __init__(self, hue_lamp: phue.Light):
         self.hue_lamp = hue_lamp
     
     @property
