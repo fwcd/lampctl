@@ -1,8 +1,11 @@
 .DS_Store
 .vscode
-venv
+
 __pycache__
 *.swp
 build
 dist
 *.egg-info
+
+venv
+.venv
